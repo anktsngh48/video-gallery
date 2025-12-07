@@ -1,34 +1,79 @@
 body {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 30px auto;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f5f7;
+    margin: 0;
     padding: 20px;
-    background: #fafafa;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
 h1 {
-    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
 }
 
-ul {
+#searchInput {
+    width: 90%;
+    max-width: 350px;
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.2s;
+}
+
+#searchInput:focus {
+    border-color: #007bff;
+}
+
+.video-list {
     list-style: none;
     padding: 0;
+    max-width: 700px;
+    margin: auto;
 }
 
-li {
-    background: #ffffff;
-    padding: 12px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+.video-item {
+    background: #fff;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #eee;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-a {
+.video-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.video-name {
+    font-size: 17px;
+    color: #333;
+    font-weight: 500;
+}
+
+.video-link {
     text-decoration: none;
     color: #007bff;
     font-weight: bold;
+    margin-left: 10px;
 }
 
-a:hover {
-    text-decoration: underline;
+@media (max-width: 600px) {
+    .video-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .video-link {
+        margin-top: 8px;
+    }
 }
