@@ -33,11 +33,11 @@ h1 {
 /* Grid layout */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 15px;
 }
 
-/* Card style for each video */
+/* Card style */
 .video-card {
   background: #fff;
   padding: 20px;
@@ -58,7 +58,12 @@ h1 {
   font-size: 16px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 12px;
+}
+
+.video-description {
+  font-size: 14px;
+  color: #555;
+  margin: 6px 0 12px 0;
 }
 
 .video-link {
@@ -75,7 +80,7 @@ h1 {
   background: #0056b3;
 }
 
-/* Responsive for small screens */
+/* Responsive */
 @media (max-width: 500px) {
   .video-card {
     padding: 15px;
