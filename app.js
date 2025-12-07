@@ -1,16 +1,20 @@
-fetch('videos.json')
-  .then(response => response.json())
-  .then(videos => {
-    const list = document.getElementById('videoList');
-    list.innerHTML = ""; 
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPvjYo_ui_LrwooqJQBjRaHbamJ7xXLl33sWhUhowGoAGXL8FB8po6n_DcFe1kElUw7p8ZbfJYh3YH/pub?output=csv";
 
-    videos.forEach(video => {
+fetch(sheetURL)
+  .then(response => response.text())
+  .then(csv => {
+    const rows = csv.trim().split("\n").slice(1); // skip header
+    const list = document.getElementById('videoList');
+    list.innerHTML = "";
+
+    rows.forEach(row => {
+      const [name, url] = row.split(",");
       const item = document.createElement('li');
-      item.innerHTML = `<a href="${video.url}" target="_blank">${video.name}</a>`;
+      item.innerHTML = `<a href="${url}" target="_blank">${name}</a>`;
       list.appendChild(item);
     });
   })
-  .catch(error => {
-    document.getElementById('videoList').innerHTML = "Failed to load video list.";
-    console.error(error);
+  .catch(err => {
+    document.getElementById("videoList").innerHTML = "Failed to load videos.";
+    console.error(err);
   });
