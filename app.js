@@ -1,7 +1,7 @@
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPvjYo_ui_LrwooqJQBjRaHbamJ7xXLl33sWhUhowGoAGXL8FB8po6n_DcFe1kElUw7p8ZbfJYh3YH/pub?gid=0&single=true&output=csv";
+const sheetURL = "YOUR_PUBLISHED_CSV_LINK_HERE"; // Replace with your Google Sheet CSV link
 let allVideos = [];
 
-// Load CSV from Google Sheet
+// Fetch video list from Google Sheet
 fetch(sheetURL)
   .then(response => response.text())
   .then(csv => {
@@ -20,63 +20,33 @@ fetch(sheetURL)
     });
 
     renderList(allVideos);
+  })
+  .catch(err => {
+    document.getElementById("videoList").innerHTML = "Failed to load video list.";
+    console.error(err);
   });
 
-// Render the list with file sizes
+// Render video list
 function renderList(videos) {
-    const list = document.getElementById("videoList");
-    list.innerHTML = "";
+  const list = document.getElementById("videoList");
+  list.innerHTML = "";
 
-    videos.forEach(v => {
-        const idSafe = v.name.replace(/\W/g, "");
+  videos.forEach(v => {
+    const li = document.createElement("li");
+    li.className = "video-item";
 
-        const li = document.createElement("li");
-        li.className = "video-item";
+    li.innerHTML = `
+      <span class="video-name">${v.name}</span>
+      <a class="video-link" href="${v.url}" target="_blank">Download</a>
+    `;
 
-        li.innerHTML = `
-            <span class="video-name">${v.name}</span>
-            <span class="video-size" id="size-${idSafe}">Loading...</span>
-            <a class="video-link" href="${v.url}" target="_blank">Download</a>
-        `;
-
-        list.appendChild(li);
-
-        // Fetch size
-        fetchFileSize(v.url, idSafe);
-    });
+    list.appendChild(li);
+  });
 }
 
-// Fetch file size using HEAD request
-function fetchFileSize(url, id) {
-    fetch(url, { method: "HEAD" })
-        .then(response => {
-            const size = response.headers.get("Content-Length");
-            const el = document.getElementById("size-" + id);
-
-            if (!size) {
-                el.innerText = "";
-                return;
-            }
-
-            el.innerText = formatBytes(size);
-        })
-        .catch(() => {
-            const el = document.getElementById("size-" + id);
-            el.innerText = "";
-        });
-}
-
-// Convert bytes → KB/MB/GB
-function formatBytes(bytes) {
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (!bytes) return "0 Bytes";
-    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
-    return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
-}
-
-// Search filter
+// Search functionality
 document.getElementById("searchInput").addEventListener("input", e => {
-    const term = e.target.value.toLowerCase();
-    const filtered = allVideos.filter(v => v.name.toLowerCase().includes(term));
-    renderList(filtered);
+  const term = e.target.value.toLowerCase();
+  const filtered = allVideos.filter(v => v.name.toLowerCase().includes(term));
+  renderList(filtered);
 });
