@@ -1,4 +1,4 @@
-const sheetURL = "YOUR_PUBLISHED_CSV_LINK_HERE"; // Replace with your Google Sheet CSV link
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPvjYo_ui_LrwooqJQBjRaHbamJ7xXLl33sWhUhowGoAGXL8FB8po6n_DcFe1kElUw7p8ZbfJYh3YH/pub?gid=0&single=true&output=csv"; // Replace with your Google Sheet CSV link
 let allVideos = [];
 
 // Fetch CSV from Google Sheet
@@ -53,3 +53,4 @@ document.getElementById("searchInput").addEventListener("input", e => {
   const filtered = allVideos.filter(v => v.name.toLowerCase().includes(term));
   renderList(filtered);
 });
+
