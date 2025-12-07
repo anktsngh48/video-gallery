@@ -1,7 +1,7 @@
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPvjYo_ui_LrwooqJQBjRaHbamJ7xXLl33sWhUhowGoAGXL8FB8po6n_DcFe1kElUw7p8ZbfJYh3YH/pub?gid=0&single=true&output=csv"; // Replace with your CSV link
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPvjYo_ui_LrwooqJQBjRaHbamJ7xXLl33sWhUhowGoAGXL8FB8po6n_DcFe1kElUw7p8ZbfJYh3YH/pub?gid=0&single=true&output=csv"; // Replace with your Google Sheet CSV link
 let allVideos = [];
 
-// Load CSV from Google Sheet
+// Fetch CSV from Google Sheet
 fetch(sheetURL)
   .then(res => res.text())
   .then(csv => {
@@ -10,12 +10,14 @@ fetch(sheetURL)
 
     const nameIndex = headers.indexOf("name");
     const urlIndex = headers.indexOf("url");
+    const descIndex = headers.indexOf("description");
 
     allVideos = rows.map(r => {
       const parts = r.split(",");
       return {
         name: parts[nameIndex]?.replace(/"/g, "").trim(),
-        url: parts[urlIndex]?.replace(/"/g, "").trim()
+        url: parts[urlIndex]?.replace(/"/g, "").trim(),
+        description: parts[descIndex]?.replace(/"/g, "").trim() || ""
       };
     });
 
@@ -26,7 +28,7 @@ fetch(sheetURL)
     console.error(err);
   });
 
-// Render videos as cards
+// Render video cards
 function renderList(videos) {
   const container = document.getElementById("videoList");
   container.innerHTML = "";
@@ -37,6 +39,7 @@ function renderList(videos) {
 
     card.innerHTML = `
       <div class="video-title">${v.name}</div>
+      <div class="video-description">${v.description}</div>
       <a class="video-link" href="${v.url}" target="_blank">Download</a>
     `;
 
