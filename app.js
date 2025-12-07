@@ -1,9 +1,9 @@
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPvjYo_ui_LrwooqJQBjRaHbamJ7xXLl33sWhUhowGoAGXL8FB8po6n_DcFe1kElUw7p8ZbfJYh3YH/pub?gid=0&single=true&output=csv"; // Replace with your Google Sheet CSV link
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPvjYo_ui_LrwooqJQBjRaHbamJ7xXLl33sWhUhowGoAGXL8FB8po6n_DcFe1kElUw7p8ZbfJYh3YH/pub?gid=0&single=true&output=csv"; // Replace with your CSV link
 let allVideos = [];
 
-// Fetch video list from Google Sheet
+// Load CSV from Google Sheet
 fetch(sheetURL)
-  .then(response => response.text())
+  .then(res => res.text())
   .then(csv => {
     const rows = csv.trim().split("\n");
     const headers = rows.shift().split(",").map(h => h.trim().toLowerCase());
@@ -26,21 +26,21 @@ fetch(sheetURL)
     console.error(err);
   });
 
-// Render video list
+// Render videos as cards
 function renderList(videos) {
-  const list = document.getElementById("videoList");
-  list.innerHTML = "";
+  const container = document.getElementById("videoList");
+  container.innerHTML = "";
 
   videos.forEach(v => {
-    const li = document.createElement("li");
-    li.className = "video-item";
+    const card = document.createElement("div");
+    card.className = "video-card";
 
-    li.innerHTML = `
-      <span class="video-name">${v.name}</span>
+    card.innerHTML = `
+      <div class="video-title">${v.name}</div>
       <a class="video-link" href="${v.url}" target="_blank">Download</a>
     `;
 
-    list.appendChild(li);
+    container.appendChild(card);
   });
 }
 
@@ -50,4 +50,3 @@ document.getElementById("searchInput").addEventListener("input", e => {
   const filtered = allVideos.filter(v => v.name.toLowerCase().includes(term));
   renderList(filtered);
 });
-
