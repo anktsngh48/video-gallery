@@ -40,7 +40,7 @@ function renderList(videos) {
     card.innerHTML = `
       <div class="video-title">${v.name}</div>
       <div class="video-description">${v.description}</div>
-      <a class="video-link" href="${v.url}" target="_blank">Download</a>
+      <a class="video-link" href="${v.url}" target="_blank">Play Video</a>
     `;
 
     container.appendChild(card);
@@ -53,4 +53,5 @@ document.getElementById("searchInput").addEventListener("input", e => {
   const filtered = allVideos.filter(v => v.name.toLowerCase().includes(term));
   renderList(filtered);
 });
+
 
