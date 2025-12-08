@@ -24,7 +24,7 @@ fetch(sheetURL)
     renderList(allVideos);
   })
   .catch(err => {
-    document.getElementById("videoList").innerHTML = "Failed to load video list.";
+    document.getElementById("videoList").innerHTML = "Failed to load video list. Please refresh";
     console.error(err);
   });
 
@@ -53,5 +53,6 @@ document.getElementById("searchInput").addEventListener("input", e => {
   const filtered = allVideos.filter(v => v.name.toLowerCase().includes(term));
   renderList(filtered);
 });
+
 
 
